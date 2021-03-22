@@ -1,0 +1,5 @@
+.jpg
+*.jpg
+venv
+*.pyc
+app.py
