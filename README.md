@@ -1,1 +1,1 @@
-FlaskF1
+DjangoF1

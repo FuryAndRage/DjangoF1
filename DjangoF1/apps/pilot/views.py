@@ -66,12 +66,3 @@ def save_pilot(request):
             
     return render(request, 'image.html')
 
-"""
-if not data_from_form.image:
-    striped_image = str(data_from_form.cover).split('/')
-    image_url = data_from_form.cover
-    img_temp = NamedTemporaryFile(delete = True)
-    img_temp.write(req.urlopen(image_url).read())
-    img_temp.flush()
-    data_from_form.image.save(striped_image[-1], File(img_temp))
-"""

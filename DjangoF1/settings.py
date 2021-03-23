@@ -40,6 +40,8 @@ INSTALLED_APPS = [
 
     'DjangoF1.apps.core',
     'DjangoF1.apps.pilot',
+    'DjangoF1.apps.constructor',
+    'DjangoF1.apps.season',
 ]
 
 MIDDLEWARE = [
