@@ -29,7 +29,7 @@ def get_json(season):
             # print(item)
         for item in standings_list:
             print(item.get('driver'), item.get('position'), item.get('points'))
-            
+
         
 
 def season(request, season):
@@ -43,10 +43,6 @@ def season(request, season):
             file.write(req.content)
             get_json(season)
 
-       
-  
-
-    
     return render(request, 'season.html')
 
 
