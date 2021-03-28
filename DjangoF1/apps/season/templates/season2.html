@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-beta1/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Racing+Sans+One&display=swap" rel="stylesheet">
+<link href="https://blogfonts.com/css/aWQ9MTUxNTEzJnN1Yj01MTMmYz1mJnR0Zj1Gb3JtdWxhMS1Cb2xkX3dlYl8wLnR0ZiZuPWZvcm11bGExLWRpc3BsYXktYm9sZA/Formula1 Display Bold.ttf" rel="stylesheet" type="text/css"/>
 <link href="https://fonts.googleapis.com/css2?family=Train+One&display=swap" rel="stylesheet">
 <title></title>
 <style>
@@ -96,18 +96,22 @@
     justify-content: middle;
     z-index:0;
     font-size:3em;
+    
       
 }
-.image-listing{
+.vertical-line .driver-number-listing{
+    top: 10px;
+    left: 2.8em;
+    opacity: 0.1;
     
 }
 
-
 .driver-image .image-listing{
     z-index:1000;
-    position:relative
+    position:relative;
     display:inline-block;
     align-self: center;
+    
     
 }
 
@@ -145,7 +149,7 @@
         <div class="col-12">
             <ul class="list-group list-group-flush" style="background-color: #2e2e2e;">
                 {% for item in stats  %}
-                <li class="list-group-item" style="background-color: #2e2e2e; color: white;">
+                <li class="list-group-item" style="background-color:#2e2e2e ; color: white;">
                     <div class="">
                         <div class="d-flex">
                             <span class="position-listing">{{item.position}}º</span>
@@ -153,7 +157,7 @@
                                 <p class="ml-2 mb-0 fs-6 constructor-listing">{{item.constructor}}</p>
                                 <p class="ml-2 mb-0  driver-listing">{{item.driver}}</p> 
                                 <p class="ml-2 mb-0  driver-listing">{{item.points}} Points</p>
-                                <p class="driver-number-listing">{{item.driver.number}}</p> 
+                                <p class="driver-number-listing" style=" font-family: 'Train One', cursive;">{{item.driver.number}}</p> 
                                 
                             </div>
                             <div class="driver-image">
@@ -170,6 +174,7 @@
         </div>
         <div class="row">
            
+         
         </div>
     </div>
     <script type="text/javascript">

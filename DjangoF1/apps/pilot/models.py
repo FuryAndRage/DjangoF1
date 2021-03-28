@@ -12,8 +12,6 @@ class Pilot(models.Model):
     url = models.URLField(null= True)
     image = models.ImageField(upload_to = 'pilot/', null = True, blank = True)
 
-    class Meta:
-        unique_together = ('forename', 'surname')
 
     def __str__(self):
         return f'{self.forename} {self.surname}'
