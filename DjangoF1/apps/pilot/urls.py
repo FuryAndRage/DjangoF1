@@ -5,5 +5,6 @@ app_name = 'pilot'
 
 urlpatterns = [
     path('index/', views.index, name = 'index'),
-    path('', views.index, name = 'save')
+    path('', views.index, name = 'ind'),
+    path('save/pilot/', views.save_pilot, name = 'save')
 ]

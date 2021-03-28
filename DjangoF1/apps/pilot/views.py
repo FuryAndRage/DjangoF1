@@ -17,15 +17,24 @@ def get_image(url):
     req = requests.get(url, headers = headers)
     soup = bs(req.text, 'html.parser')
     img_list= []
-    if soup.find(class_='image'):
-        image = soup.find(class_='image', attrs='a')
-        images = image.findChildren("img", recursive = True)
-        if(images[0].has_attr('srcset')):
-            images = images[0].get('srcset')
-        else:
-            images = images[0].get('src')
-        srcset = images.split(',')
-        [img_list.append(item.split()[0]) for item in srcset ]
+    if soup.find(class_='vcard'):
+        vcard = soup.find(class_='vcard')
+        if vcard.find(class_='image'):
+            image = soup.find_all(class_='image', attrs='a')
+            if len(image) > 1:
+                images = image[1].findChildren("img", recursive = True)
+                if(images[0].has_attr('srcset')):
+                    images = images[0].get('srcset')
+                else:
+                    images = images[0].get('src')
+            else:
+                images = image[0].findChildren("img", recursive = True)
+                if(images[0].has_attr('srcset')):
+                    images = images[0].get('srcset')
+                else:
+                    images = images[0].get('src')
+            srcset = images.split(',')
+            [img_list.append(item.split()[0]) for item in srcset ]
     if len(img_list) > 0 :
         return img_list[0]
     else:
@@ -37,31 +46,32 @@ def save_pilot(request):
     with open('static/drivers.csv') as csvfile:
         csv_reader = csv.reader(csvfile, delimiter = ',')
         for row in csv_reader:
-            if int(row[0]) > 212:
-                pilot = Pilot(
-                    driver_id = row[0],
-                    driver_ref = row[1],
-                    number = row[2],
-                    code = row[3],
-                    forename = row[4],
-                    surname = row[5],
-                    dob = row[6],
-                    nationality = row[7],
-                    url = row[8],
+            # if int(row[0]) > 212:
+            #     pilot = Pilot(
+            #         driver_id = row[0],
+            #         driver_ref = row[1],
+            #         number = row[2],
+            #         code = row[3],
+            #         forename = row[4],
+            #         surname = row[5],
+            #         dob = row[6],
+            #         nationality = row[7],
+            #         url = row[8],
                     
 
-                )
-                if not pilot.image:
-                    striped_image = str(pilot.url).split('/')
-                    image_url = f'https:{get_image(row[-1])}'
-                    print(image_url)
-                    if image_url:
-                        img_temp = NamedTemporaryFile(delete = True)
-                        img_temp.write(req.urlopen(image_url).read())
-                        img_temp.flush()
-                        pilot.image.save(f'{striped_image[-1]}.jpg', File(img_temp))
-                print(pilot.driver_id, pilot.forename)
-                pilot.save()
+            #     )
+            #     if not pilot.image:
+            #         striped_image = str(pilot.url).split('/')
+            #         image_url = f'https:{get_image(row[-1])}'
+            #         print(image_url)
+            #         if image_url:
+            #             img_temp = NamedTemporaryFile(delete = True)
+            #             img_temp.write(req.urlopen(image_url).read())
+            #             img_temp.flush()
+            #             pilot.image.save(f'{striped_image[-1]}.jpg', File(img_temp))
+            #     print(pilot.driver_id, pilot.forename)
+            #     pilot.save()
+            print(get_image('https://en.wikipedia.org/wiki/Tiago_Monteiro'))
 
             
     return render(request, 'image.html')

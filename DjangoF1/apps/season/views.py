@@ -1,3 +1,4 @@
+from DjangoF1.apps.constructor_season.models import ConstructorSeason
 from django.shortcuts import render, get_object_or_404
 from DjangoF1.apps.constructor.models import Constructors
 from DjangoF1.apps.pilot.models import Pilot
@@ -6,7 +7,7 @@ import os
 import  json
 
 def get_json(season):
-    with open(f'static/driver_standing_{season}.json', 'r') as fs:
+    with open(f'static/driver_standing/driver_standing_{season}.json', 'r') as fs:
         data = json.load(fs)
         new_dict = []
         standings_list = []
@@ -16,34 +17,32 @@ def get_json(season):
                 new_dict.append(x)
 
         for item in new_dict[-1]['StandingsLists'][0]['DriverStandings']:
+            print(ConstructorSeason.objects.filter(season = 2021))
             standings_dict = {
                 'driver':get_object_or_404(Pilot, driver_ref = item.get('Driver')['driverId']),
                 'constructor':get_object_or_404(Constructors, constructor_ref = item.get('Constructors')[0]['constructorId']),
+                'constructor_season': ConstructorSeason.objects.filter(season = season),
                 'position':item.get('position'),
                 'points':item.get('points'),
                 'wins': item.get('wins')
                 }
 
             standings_list.append(standings_dict)
-            
-            # print(item)
-        for item in standings_list:
-            print(item.get('driver'), item.get('position'), item.get('points'))
 
-        
+        return standings_list
 
 def season(request, season):
     headers = {'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0'}
     req = requests.get(f'http://ergast.com/api/f1/{season}/driverStandings.json', headers = headers)
     
-    if os.path.isfile(f'static/driver_standing_{season}.json'):
-       get_json(season)
+    if os.path.isfile(f'static/driver_standing/driver_standing_{season}.json'):
+       return render(request, 'season.html', {'stats':get_json(season)})
     else:
-        with open(f'static/driver_standing_{season}.json', 'wb') as file:
+        with open(f'static/driver_standing/driver_standing_{season}.json', 'wb') as file:
             file.write(req.content)
             get_json(season)
 
-    return render(request, 'season.html')
+            return render(request, 'season.html', {'stats':get_json(season)})
 
 
 # get_json('http://ergast.com/api/f1/2020/drivers')

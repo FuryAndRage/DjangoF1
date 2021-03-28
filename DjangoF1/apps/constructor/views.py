@@ -16,15 +16,24 @@ def get_image(url):
     req = requests.get(url, headers = headers)
     soup = bs(req.text, 'html.parser')
     img_list= []
-    if soup.find(class_='image'):
-        image = soup.find(class_='image', attrs='a')
-        images = image.findChildren("img", recursive = True)
-        if(images[0].has_attr('srcset')):
-            images = images[0].get('srcset')
-        else:
-            images = images[0].get('src')
-        srcset = images.split(',')
-        [img_list.append(item.split()[0]) for item in srcset ]
+    if soup.find(class_='vcard'):
+        vcard = soup.find(class_='vcard')
+        if vcard.find(class_='image'):
+            image = soup.find_all(class_='image', attrs='a')
+            if len(image) > 1:
+                images = image[1].findChildren("img", recursive = True)
+                if(images[0].has_attr('srcset')):
+                    images = images[0].get('srcset')
+                else:
+                    images = images[0].get('src')
+            else:
+                images = image[0].findChildren("img", recursive = True)
+                if(images[0].has_attr('srcset')):
+                    images = images[0].get('srcset')
+                else:
+                    images = images[0].get('src')
+            srcset = images.split(',')
+            [img_list.append(item.split()[0]) for item in srcset ]
     if len(img_list) > 0 :
         return img_list[0]
     else:
@@ -56,6 +65,5 @@ def creator(request):
                     constructor.image.save(f'{striped_image[-1]}.jpg', File(img_temp))
             print(constructor.name)
             constructor.save()
-
-            
+   
     return render(request, 'image.html')

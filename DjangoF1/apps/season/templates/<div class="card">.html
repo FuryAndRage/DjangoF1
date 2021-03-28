@@ -1,0 +1,26 @@
+<div class="card">
+    <div class="card-body">
+     <div class="row">
+         <div class="position rounded-pill bg-primary  ">
+             <div class="col-3 pr-0 mr-0" style="border: 1px solid red;">
+                 <span class="position-span">{{item.position}}º</span>
+             </div>
+             <div class="col-3 ml-0">
+                 <img src="{{item.driver.image.url}}" class="card-img-top" style="width: 7em;height:5em;border-radius: 50%;" alt="">
+             </div>
+             <div class="col-6 ">
+                 <p class="d-none d-lg-block text-white fs-2 shadow">{{item.driver}}</p>
+                 <p class="d-lg-none d-md-block float-right">{{item.driver.code}}</p>
+             </div>
+         </div>
+    </div>
+    <span id="rangeValue{{forloop.counter}}" style=" 
+    position: relative;
+    display: block;
+    /* text-align: center; */
+    font-size: 3em;
+    color: #999;
+    font-weight: 400;">{{item.points}}</span>
+    <input class="range" disabled type="range" value="{{item.points}}" min="0" max="{{stats.0.points}}" id="{{forloop.counter}}" onChange="rangeSlide( this.id,this.value, '{{item.driver.image.url}}')" onmousemove="rangeSlide(this.value)">
+    </div>
+</div>
