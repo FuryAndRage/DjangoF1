@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -8,15 +9,16 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-beta1/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://blogfonts.com/css/aWQ9MTUxNTEzJnN1Yj01MTMmYz1mJnR0Zj1Gb3JtdWxhMS1Cb2xkX3dlYl8wLnR0ZiZuPWZvcm11bGExLWRpc3BsYXktYm9sZA/Formula1 Display Bold.ttf" rel="stylesheet" type="text/css"/>
 <link href="https://fonts.googleapis.com/css2?family=Train+One&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{%static 'css/main.css'%}">
 <title></title>
 {% block css %}{% endblock css %}
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-danger text-white">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">Formula Fans</a>
+          <a class="navbar-brand" href="#" style="" > Formula 1 Club</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -27,6 +29,12 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">Drivers</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Teams</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Circuits</a>
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">

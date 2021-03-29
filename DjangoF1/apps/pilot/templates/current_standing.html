@@ -30,8 +30,14 @@
                                 
                             </div>
                             <div class="driver-image">
-                                <!-- <p class="driver-number-listing">{{item.driver.number}}</p>  -->
+                                
+                                {% if item.pilot_season %}
+                                <img src="{{item.pilot_season.0.image.url}}" class="image-listing" alt="">
+                                {% else %}
                                 <img src="{{item.driver.image.url}}" class="image-listing" alt=""> 
+                                {% endif %}
+                                    
+                                
                             </div>
                             
                         </div> 
