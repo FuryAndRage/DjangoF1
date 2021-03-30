@@ -64,8 +64,10 @@ def get_json_current_driver_standing():
         for item in gen_list[-1].get('StandingsLists'):
             season = item.get('season')
             for driver in item.get('DriverStandings'):
+                print(driver)
                 constructor = get_object_or_404(Constructors, constructor_ref = driver.get('Constructors')[0]['constructorId'])
                 pilot = get_object_or_404(Pilot, driver_ref = driver.get('Driver')['driverId'])
+                number = driver.get('Driver')['permanentNumber']
                 standings_dict = {
                     'driver': pilot,
                     'constructor':get_object_or_404(Constructors, constructor_ref = driver.get('Constructors')[0]['constructorId']),
@@ -73,7 +75,8 @@ def get_json_current_driver_standing():
                     'pilot_season': PilotSeason.objects.filter(Q(season = season) & Q(pilot = pilot.id)),
                     'position':driver.get('position'),
                     'points':driver.get('points'),
-                    'wins': driver.get('wins')
+                    'wins': driver.get('wins'),
+                    'number':number
                     }
                 standings_list.append(standings_dict)
 
