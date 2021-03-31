@@ -64,7 +64,6 @@ def get_json_current_driver_standing():
         for item in gen_list[-1].get('StandingsLists'):
             season = item.get('season')
             for driver in item.get('DriverStandings'):
-                print(driver)
                 constructor = get_object_or_404(Constructors, constructor_ref = driver.get('Constructors')[0]['constructorId'])
                 pilot = get_object_or_404(Pilot, driver_ref = driver.get('Driver')['driverId'])
                 number = driver.get('Driver')['permanentNumber']

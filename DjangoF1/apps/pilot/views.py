@@ -13,34 +13,37 @@ import os
 
 from DjangoF1.apps.constructor_season.models import ConstructorSeason
 from DjangoF1.apps.constructor.models import Constructors
-
+from datetime import date
 
 def driver_standing_by_season(request, season):
     headers = {'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0'}
     req = requests.get(f'http://ergast.com/api/f1/{season}/driverStandings.json', headers = headers)
+    seasons = (item for item in range(1950, date.today().year))
     
     if os.path.isfile(f'static/driver_standing/driver_standing_{season}.json'):
-       return render(request, 'driver_standing.html', {'stats':get_json_driver_standing_season(season)})
+       return render(request, 'driver_standing.html', {'stats':get_json_driver_standing_season(season), 'seasons':seasons})
     else:
         with open(f'static/driver_standing/driver_standing_{season}.json', 'wb') as file:
             file.write(req.content)
             get_json_driver_standing_season(season)
 
-            return render(request, 'driver_standing.html', {'stats':get_json_driver_standing_season(season)})
+            return render(request, 'driver_standing.html', {'stats':get_json_driver_standing_season(season), 'seasons':seasons})
 
 
-def drivers_by_season(request, season):
+def drivers_by_season(request):
     headers = {'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0'}
     req = requests.get(f'http://ergast.com/api/f1/{season}/drivers.json', headers = headers)
     
-    if os.path.isfile(f'static/drivers/drivers_season_{season}.json'):
-       return render(request, 'drivers.html', {'stats':get_json_driver_season(season)})
-    else:
-        with open(f'static/drivers/drivers_season_{season}.json', 'wb') as file:
-            file.write(req.content)
-            get_json_driver_season(season)
+    if request.method == 'POST':
+        season = request.POST.get('season')
+        if os.path.isfile(f'static/drivers/drivers_season_{season}.json'):
+           return render(request, 'drivers.html', {'stats':get_json_driver_season(season)})
+        else:
+            with open(f'static/drivers/drivers_season_{season}.json', 'wb') as file:
+                file.write(req.content)
+                get_json_driver_season(season)
 
-            return render(request, 'drivers.html', {'stats':get_json_driver_season(season)})
+                return render(request, 'drivers.html', {'stats':get_json_driver_season(season)})
 
 
 def drivers_current_standing(request):

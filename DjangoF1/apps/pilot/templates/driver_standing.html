@@ -8,11 +8,29 @@
 {% block main %}
 <body style="background-color:#2e2e2e">
     <div class="container-fluid">
-        <!-- <div class="row ">
-            <div class="col-12 bg-danger text-white text-center fs-3 banner-top-standing-listing shadow">
-                <p style="" class="mt-2 font-weight-bold ">2020 Driver Standings  </p>
+        <div class="row justify-content-center">
+            <div class="col-6 mt-2 mb-2">
+                <form>
+                    <div class="row row-cols-lg-auto g-3 align-items-center">
+                        <div class="col-12">
+                            <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
+                           <select name="" id="" class="form-select">
+                        <option value="" selected>-----</option>
+                        {% for year in seasons  %}
+                        <option value="{{year}}">{{year}}</option>
+                        {% endfor %}
+                    </select>
+                          </div>
+
+                        
+                    <button></button>
+                    </div>
+                   
+                </form>
+               
             </div>
-        </div> -->
+        </div>
+    
         <div class="col-12">
             <ul class="list-group list-group-flush" style="background-color: #2e2e2e;">
                 {% for item in stats  %}
