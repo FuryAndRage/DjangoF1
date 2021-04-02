@@ -10,11 +10,12 @@
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-6 mt-2 mb-2">
-                <form>
+                <form method="post", action="">
+                    {%csrf_token%}
                     <div class="row row-cols-lg-auto g-3 align-items-center">
                         <div class="col-12">
                             <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
-                           <select name="" id="" class="form-select">
+                           <select name="" id="" class="form-select" name="season">
                         <option value="" selected>-----</option>
                         {% for year in seasons  %}
                         <option value="{{year}}">{{year}}</option>
@@ -23,7 +24,7 @@
                           </div>
 
                         
-                    <button></button>
+                    <button class="btn btn-danger">Submit</button>
                     </div>
                    
                 </form>
