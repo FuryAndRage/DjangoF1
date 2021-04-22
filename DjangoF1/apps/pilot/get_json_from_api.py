@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
+from django.core.serializers import serialize
 from .models import Pilot
 from DjangoF1.apps.constructor_season.models import ConstructorSeason
 from DjangoF1.apps.constructor.models import Constructors
@@ -72,6 +73,32 @@ def get_json_current_driver_standing():
                     'constructor':get_object_or_404(Constructors, constructor_ref = driver.get('Constructors')[0]['constructorId']),
                     'constructor_season': ConstructorSeason.objects.filter(Q(season = season) & Q(constructor = constructor.id) ),
                     'pilot_season': PilotSeason.objects.filter(Q(season = season) & Q(pilot = pilot.id)),
+                    'position':driver.get('position'),
+                    'points':driver.get('points'),
+                    'wins': driver.get('wins'),
+                    'number':number
+                    }
+                standings_list.append(standings_dict)
+
+        return standings_list
+
+def get_json_current_driver_standing_json():
+    with open(f'static/drivers/drivers_current.json', 'r') as fs:
+        data = json.load(fs)
+        standings_list = []
+        standings_dict = dict()
+        gen_list = [item['StandingsTable'] for item in data.values()]
+        for item in gen_list[-1].get('StandingsLists'):
+            season = item.get('season')
+            for driver in item.get('DriverStandings'):
+                constructor = serialize('json',[get_object_or_404(Constructors, constructor_ref = driver.get('Constructors')[0]['constructorId'])])
+                pilot = serialize('json',[get_object_or_404(Pilot, driver_ref = driver.get('Driver')['driverId'])])
+                number = driver.get('Driver')['permanentNumber']
+                standings_dict = {
+                    'driver': pilot,
+                    'constructor':constructor,
+                    # 'constructor_season': ConstructorSeason.objects.filter(Q(season = season) & Q(constructor = constructor.id) ),
+                    # 'pilot_season': PilotSeason.objects.filter(Q(season = season) & Q(pilot = pilot.id)),
                     'position':driver.get('position'),
                     'points':driver.get('points'),
                     'wins': driver.get('wins'),

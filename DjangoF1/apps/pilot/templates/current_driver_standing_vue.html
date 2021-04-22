@@ -1,0 +1,37 @@
+{%extends 'base.html'%}
+{%block css%}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+{%endblock css%}
+{%block main%}
+<div id="app">
+	<div v-for="pilot of pilots"></div>
+</div>
+
+
+
+{%endblock main%}
+{%block js%}
+<script type="text/javascript">
+	
+	var vue = new Vue({
+		el:'#app',
+		delimiters: ["[[","]]"],
+		data(){
+			return{pilots:[],}
+			
+		},
+		methods:{
+			fet(){
+				axios.get('http://localhost:8000/json').then(response =>(console.log(response.data)))
+				
+		}	
+		},
+		created(){
+			this.fet()
+		}
+		
+		
+	});
+</script>
+{%endblock js%}

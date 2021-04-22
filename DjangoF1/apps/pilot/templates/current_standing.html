@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block css %}
-<style>
-  
-</style>
+
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
+
 {% endblock css %}
 {% block main %}
 <body style="background-color:#2e2e2e">
@@ -32,7 +32,7 @@
                             <div class="driver-image">
                                 
                                 {% if item.pilot_season %}
-                                <img src="{{item.pilot_season.0.image.url}}" class="image-listing" alt="">
+                                <img src="{{item.pilot_season.0.image.url}}" class="image-listing" style="width: 5em;" alt="">
                                 {% else %}
                                 <img src="{{item.driver.image.url}}" class="image-listing" alt=""> 
                                 {% endif %}

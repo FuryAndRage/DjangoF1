@@ -1,13 +1,15 @@
 from django.shortcuts import render,get_object_or_404
 from django.core.files import File
 from django.db.models import Q
+from django.http import JsonResponse
+from django.core.serializers import serialize
 from bs4 import BeautifulSoup as bs
 import requests
 from urllib import request as req
 from tempfile import NamedTemporaryFile
 import csv
 from .models import Pilot
-from .get_json_from_api import get_json_driver_standing_season, get_json_driver_season,get_json_current_driver_standing
+from .get_json_from_api import get_json_driver_standing_season, get_json_driver_season,get_json_current_driver_standing,get_json_current_driver_standing_json
 import json
 import os
 
@@ -50,13 +52,40 @@ def drivers_by_season(request, season):
 def drivers_current_standing(request):
     headers = {'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0'}
     req = requests.get(f'http://ergast.com/api/f1/current/driverStandings.json', headers = headers)
-    if os.path.isfile(f'static/drivers/drivers_current.json'):
-       return render(request, 'current_standing.html', {'stats':get_json_current_driver_standing()})
-    else:
-        with open(f'static/drivers/drivers_current.json', 'wb') as file:
+    # if os.path.isfile(f'static/drivers/drivers_current.json'):
+    #    return render(request, 'current_standing.html', {'stats':get_json_current_driver_standing()})
+    # else:
+    #     with open(f'static/drivers/drivers_current.json', 'wb') as file:
+    #         file.write(req.content)
+    #         get_json_current_driver_standing()
+    #         return render(request, 'current_standing.html', {'stats':get_json_current_driver_standing()})
+    with open(f'static/drivers/drivers_current.json', 'wb') as file:
+        file.write(req.content)
+        get_json_current_driver_standing()
+        return render(request, 'current_standing.html', {'stats':get_json_current_driver_standing()})
+
+
+def drivers_current_standing_json(request):
+    headers = {'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0'}
+    req = requests.get(f'http://ergast.com/api/f1/current/driverStandings.json', headers = headers)
+    # json_obj = json.loads(get_json_current_driver_standing_json())
+    
+    data = get_json_current_driver_standing_json()
+
+    # if os.path.isfile(f'static/drivers/drivers_current.json'):
+
+    #    return render(request, 'current_driver_standing_vue.html', {'stats':json.dumps(data)})
+    # else:
+    #     with open(f'static/drivers/drivers_current.json', 'wb') as file:
+    #         file.write(req.content)
+    #         get_json_current_driver_standing_json()
+    #         return render(request, 'current_driver_standing_vue.html', {'stats':json.dumps(data)})
+
+    with open(f'static/drivers/drivers_current.json', 'wb') as file:
             file.write(req.content)
-            get_json_current_driver_standing()
-            return render(request, 'current_standing.html', {'stats':get_json_current_driver_standing()})
+            get_json_current_driver_standing_json()
+            return render(request, 'current_driver_standing_vue.html', {'stats':json.dumps(data)})
+
 
 
 # Para salvar todos os pilotos
