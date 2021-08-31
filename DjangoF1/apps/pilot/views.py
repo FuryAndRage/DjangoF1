@@ -62,7 +62,7 @@ def drivers_current_standing(request):
     with open(f'static/drivers/drivers_current.json', 'wb') as file:
         file.write(req.content)
         get_json_current_driver_standing()
-        return render(request, 'current_standing.html', {'stats':get_json_current_driver_standing()})
+        return render(request, 'new_current.html', {'stats':get_json_current_driver_standing()})
 
 
 def drivers_current_standing_json(request):

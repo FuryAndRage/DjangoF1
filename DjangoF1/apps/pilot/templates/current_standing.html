@@ -15,6 +15,7 @@
         <div class="col-12">
             <ul class="list-group list-group-flush" style="background-color: #2e2e2e;">
                 {% for item in stats  %}
+                
                 <li class="list-group-item" style="background-color:#2e2e2e ; color: white;">
                     <div class="">
                         <div class="d-flex">
@@ -35,16 +36,33 @@
                                 {% else %}
                                 <img src="{{item.driver.image.url}}" class="image-listing" alt=""> 
                                 {% endif %}
-                                    
-                                
                             </div>
-                            
                         </div> 
                     </div>
                 </li>
                 
                 {% endfor %}
-              </ul>       
+              </ul> 
+              
+              <div class="table-responsive-xl">
+                  <table class="table">
+                      <thead>
+                        {% for item in stats %}
+                          <tr>
+                                <th>
+                                    <div class="p-3 border">
+                                        <p class="text-white">{{item.position}}</p>
+                                        
+                                    </div>
+                                </th>
+                                <td>teste</td>
+                          </tr>
+                        {% endfor %}
+                      </thead>
+                     
+                          
+                  </table>
+              </div>
         </div>
         
     </div>
